@@ -1,0 +1,19 @@
+[scripts]
+python = "python"
+flask = "flask"
+pytest = "pytest"
+
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Flask = ">=1.1.2"
+pytest = "*"
+ipython = "*"
+
+[requires]
+python_version = "3.9"
+
+[dev-packages]
