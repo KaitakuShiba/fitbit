@@ -2,6 +2,7 @@
 python = "python"
 flask = "flask"
 pytest = "pytest"
+zappa = "zappa"
 
 [[source]]
 url = "https://pypi.org/simple"
@@ -9,11 +10,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Flask = ">=1.1.2"
 pytest = "*"
-ipython = "*"
-
-[requires]
-python_version = "3.9"
+fitbit = "*"
+zappa = "*"
+Flask = ">=1.1.2"
+CherryPy = "*"
 
 [dev-packages]
+
+[requires]
+python_version = "3.8"
