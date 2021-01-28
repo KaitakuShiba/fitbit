@@ -86,7 +86,7 @@
       input[type=radio]:checked + label:after {
       opacity: 1;
       }
-      input[type=text], input[type=password] {
+      input[type=text], input[type=password], input[type=number] {
       width: calc(100% - 57px);
       height: 36px;
       margin: 13px 0 0 -5px;
@@ -95,9 +95,6 @@
       border: solid 1px #cbc9c9; 
       box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
       background: #fff; 
-      }
-      input[type=password] {
-      margin-bottom: 15px;
       }
       #icon {
       display: inline-block;
@@ -136,9 +133,9 @@
         <label id="icon" for="name"><i class="fas fa-user"></i></label>
         <input type="text" name="client_id" id="name" placeholder="OAuth 2.0 Client ID" required/>
         <label id="icon" for="name"><i class="fas fa-unlock-alt"></i></label>
-        <input type="text" name="client_secret" id="name" placeholder="Client Secret" required/>
+        <input type="password" name="client_secret" id="name" placeholder="Client Secret" required/>
         <label id="icon" for="name"><i class="fas fa-running"></i></label>
-        <input type="password" name="target_distance" id="name" placeholder="Target distance" required/>
+        <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="1" step="0.5" required/>
         <hr>
         <div class="btn-block">
           <button type="submit" href="/">Submit</button>

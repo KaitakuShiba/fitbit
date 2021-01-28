@@ -25,7 +25,7 @@ class Fitbit:
         # https://dev.fitbit.com/build/reference/web-api/activity/
         yesterday = str((datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"))
         fit_stats_distance = auth2_client.intraday_time_series('activities/distance', base_date=yesterday, detail_level='1min')
-        return fit_stats_distance['activities-distance'][0]['value']
+        return fit_stats_distance['activities-distance'][0]['value'], 200
 
 if __name__ == "__main__":
     call()
