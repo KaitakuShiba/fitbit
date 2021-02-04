@@ -9,7 +9,7 @@ def test_registration():
     data = {'client_id': 'client_id', 'client_secret': 'client_secret', 'target_distance': 2 }
     result = client.post('/registration', data=data)
 
-    assert b'Hello, Fitbit!' == result.data
+    assert b'success' == result.data
 
 @pytest.fixture(autouse=True)
 def setup():

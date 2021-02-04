@@ -18,12 +18,12 @@ $ pipenv run python --version
 ```
 
 ## Testing
-```
+```bash
 # testing
 $ pipenv run pytest
 
 # Use Env
-CLIENT_ID=$CLIENT_ID CLIENT_SECRET=$CLIENT_SECRET pipenv run pytest tests/test_fitbit.py 
+$ CLIENT_ID=$CLIENT_ID CLIENT_SECRET=$CLIENT_SECRET pipenv run pytest tests/test_fitbit.py
 ```
 
 ## Debug
@@ -37,12 +37,9 @@ def test():
 test()
 ```
 
-## Deploy to AWS Lambda
-```
-$ pipenv run zappa init
-$ pipenv run zappa deploy dev
-$ pipenv run zappa update dev
-$ pipenv run zappa undeploy dev --remove-logs
+## Create DB
+```bash
+$ pipenv run python migrate.py
 ```
 
 ## Ref

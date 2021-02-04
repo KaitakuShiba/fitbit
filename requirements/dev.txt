@@ -1,5 +1,8 @@
 Flask>=1.1.2
+flask-login>=0.5
 pytest
 fitbit
 cherrypy
-zappa
+bcrypt
+Flask-SQLAlchemy
+pytest-mock

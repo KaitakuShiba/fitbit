@@ -24,6 +24,10 @@
       font-weight: 300;
       text-align: center;
       }
+      h4 {
+      font-weight: 300;
+      text-align: center;
+      }
       p {
       font-size: 12px;
       }
@@ -126,21 +130,14 @@
   </head>
   <body>
     <div class="main-block">
-      <h1>Fitbit Registration</h1>
-      <!-- あとで環境変数化する -->
-      <form action="/registration", method="post">
-        <hr>
-        <label id="icon" for="name"><i class="fas fa-user"></i></label>
-        <input type="text" name="client_id" id="name" placeholder="OAuth 2.0 Client ID" required/>
-        <label id="icon" for="name"><i class="fas fa-unlock-alt"></i></label>
-        <input type="password" name="client_secret" id="name" placeholder="Client Secret" required/>
-        <label id="icon" for="name"><i class="fas fa-running"></i></label>
-        <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="1" step="0.5" required/>
-        <hr>
-        <div class="btn-block">
-          <button type="submit" href="/">Submit</button>
-        </div>
-      </form>
+      <h1>Fitbit distance notifier token registration</h1>
+      <h4>Hello, {{ user.email }}!, Please follow the steps to get an access token for fitbit.</h4>
+        <form action="/fitbit/users" method="get">
+          <input name="user_id" value={{user.id}} type="hidden">
+          <label id="icon" for="name"><i class="fas fa-running"></i></label>
+          <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="1" step="0.5" required/>
+          <button type="submit" href="/fitbit/users">Get OAuth Token</button>
+        </form>
     </div>
   </body>
 </html>
