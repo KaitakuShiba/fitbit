@@ -9,11 +9,20 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Flask = ">=1.1.2"
 pytest = "*"
-ipython = "*"
-
-[requires]
-python_version = "3.9"
+fitbit = "*"
+zappa = "*"
+Flask = ">=1.1.2"
+CherryPy = "*"
+SQLAlchemy = ">=1.3"
+Flask-Login = ">=0.5"
+Flask-Bcrypt = "*"
+bcrypt = "*"
+Flask-SQLAlchemy = "*"
+factory-boy = ">=3.2.0"
+pytest-mock = "*"
 
 [dev-packages]
+
+[requires]
+python_version = "3.8"

@@ -1,3 +1,8 @@
 Flask>=1.1.2
+flask-login>=0.5
 pytest
-ipython
+fitbit
+cherrypy
+bcrypt
+Flask-SQLAlchemy
+pytest-mock
