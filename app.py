@@ -6,6 +6,7 @@ from modules.signup import Signup
 from modules.signin import Signin
 from modules.check_distance import CheckDistanceJob
 from flask_apscheduler import APScheduler
+from datetime import datetime
 import pdb
 
 app = Flask(__name__)
@@ -66,6 +67,8 @@ def fitbit():
     return FitbitToken().call()
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     hashed_password = db.Column(db.BINARY(60), nullable=False)
@@ -74,8 +77,8 @@ class User(db.Model, UserMixin):
     target_distance = db.Column(db.Integer, nullable=True)
     access_token = db.Column(db.Text, nullable=True)
     refresh_token = db.Column(db.String, nullable=True)
-    # created_on = db.Column(db.DateTime, server_default=db.func.now())
-    # updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(), onupdate=datetime.now())
 
     def __init__(self, name, hashed_password, client_id, client_secret, target_distance, access_token=None, refresh_token=None):
         self.name = name

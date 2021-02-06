@@ -1,20 +1,21 @@
-import app, pdb, fitbit, datetime, os
+import app, pdb, fitbit, os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+from datetime import datetime, date
 
 class CheckDistanceJob:
     @classmethod
     def call(cls):
-        users = app.User.query.all()
-        for user in users:
+        for user in app.User.query.all():
             if not user.client_id or not user.client_secret or not user.access_token or not user.refresh_token or not user.target_distance:
+                continue
+            if cls._has_already_called_today(user.updated_at):
                 continue
             
             auth2_client = fitbit.Fitbit(user.client_id, user.client_secret, oauth2=True, access_token=user.access_token, refresh_token=user.refresh_token)
-            # 今までの時間にする
-            yesterday = str((datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"))      
             try:
-                fit_stats_distance = auth2_client.intraday_time_series('activities/distance', base_date=yesterday, detail_level='1min')
+                today = str((datetime.now()).strftime("%Y-%m-%d"))
+                fit_stats_distance = auth2_client.intraday_time_series('activities/distance', base_date=today, detail_level='1min')
             except fitbit.exceptions.HTTPUnauthorized:
                 print(f'user_id: {user.id} has invalid token.')
                 continue
@@ -22,6 +23,8 @@ class CheckDistanceJob:
             kms = cls._convert_km(fit_stats_distance['activities-distance'][0]['value'])
             if cls._is_over_target_distance(kms, user.target_distance):
                 cls._send_message_to_slack(user)
+                user.updated_at = datetime.now()
+                app.db.session.commit()
 
         return 'updated!'
 
@@ -32,10 +35,13 @@ class CheckDistanceJob:
     def _is_over_target_distance(kms, target_distance):
         return  kms > target_distance
 
+    def _has_already_called_today(updated_at):
+        today = datetime.combine(date.today(), datetime.min.time())
+        return updated_at >= today
+
     def _send_message_to_slack(user):
         client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
-        try:
-            # TODO: 1日に1回の投稿とする
+        try:            
             text = f'{user.name}さんが目標距離: {user.target_distance}kmを達成しました:100::woman-running::runner::man-running::skin-tone-3:'
             client.chat_postMessage(channel=os.environ['SLACK_CHANNEL'], text=text)
         except SlackApiError as e:
