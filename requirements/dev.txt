@@ -6,3 +6,6 @@ cherrypy
 bcrypt
 Flask-SQLAlchemy
 pytest-mock
+slack_sdk
+aiohttp
+flask_apscheduler

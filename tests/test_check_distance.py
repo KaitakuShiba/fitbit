@@ -1,22 +1,26 @@
-import pytest, sqlite3, os, pdb, bcrypt
+import pytest, os, pdb, fitbit, bcrypt
 from app import app, db, User
 from modules.check_distance import CheckDistanceJob
+import slack_sdk
 
 DB_NAME = 'fitbit.db'
 
-def test_check_distance():
+def test_check_distance(mocker):
     app.config['TESTING'] = True
+    # mock_distance_km: 1.60km
+    mocker.patch('fitbit.api.Fitbit.intraday_time_series').return_value = {'activities-distance': [{'dateTime': '2000-01-01', 'value': '1.00'}]}
+    res_mock = mocker.Mock()
+    mocker.patch('slack_sdk.web.client.WebClient.chat_postMessage').return_value = res_mock
     result = CheckDistanceJob().call()
-    assert 'updated' == result
+    assert 'updated!' == result
 
 @pytest.fixture(autouse=True)
 def setup():
     __create_db()
-    email = 'sample@emxample.com'
     hashed_password = bcrypt.hashpw('password'.encode(), bcrypt.gensalt())
     db.session.add(User(
-        email=email, hashed_password=hashed_password,
-        client_id='client_id', client_secret='client_secret', target_distance=2,
+        name='foo', hashed_password=hashed_password, target_distance=1,
+        client_id='client_id', client_secret='client_secret',
         access_token='access_token',
         refresh_token='refresh_token'
     ))

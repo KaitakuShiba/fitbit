@@ -1,4 +1,6 @@
-import app, pdb, fitbit, datetime
+import app, pdb, fitbit, datetime, os
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 
 class CheckDistanceJob:
     @classmethod
@@ -19,7 +21,7 @@ class CheckDistanceJob:
             
             kms = cls._convert_km(fit_stats_distance['activities-distance'][0]['value'])
             if cls._is_over_target_distance(kms, user.target_distance):
-                 cls._send_message_to_slack()
+                cls._send_message_to_slack(user)
 
         return 'updated!'
 
@@ -30,8 +32,14 @@ class CheckDistanceJob:
     def _is_over_target_distance(kms, target_distance):
         return  kms > target_distance
 
-    def _send_message_to_slack():
-        print('slack')
+    def _send_message_to_slack(user):
+        client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
+        try:
+            # TODO: 1日に1回の投稿とする
+            text = f'{user.name}さんが目標距離: {user.target_distance}kmを達成しました:100::woman-running::runner::man-running::skin-tone-3:'
+            client.chat_postMessage(channel=os.environ['SLACK_CHANNEL'], text=text)
+        except SlackApiError as e:
+            print(f"Got an error: {e.response['error']}")        
 
 if __name__ == "__main__":
     call()

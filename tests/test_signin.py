@@ -3,20 +3,20 @@ from app import app, db, User
 from flask import request, url_for
 
 DB_NAME = 'fitbit.db'
+name = 'foo'
 
 def test_signup():
     app.config['TESTING'] = True
     client = app.test_client()
-    data = {'email': 'sample@emxample.com', 'password': 'password' }
+    data = {'name': name, 'password': 'password' }
     result = client.post('/signin', data=data, follow_redirects=True)
     assert b'hello' == result.data
 
 @pytest.fixture(autouse=True)
 def setup():
     __create_db()
-    email = 'sample@emxample.com'
     hashed_password = bcrypt.hashpw('password'.encode(), bcrypt.gensalt())
-    db.session.add(User(email=email, hashed_password=hashed_password, client_id='client_id', client_secret='client_secret'))
+    db.session.add(User(name=name, hashed_password=hashed_password, client_id='client_id', client_secret='client_secret'))
     db.session.commit()
 
 def teardown():

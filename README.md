@@ -23,7 +23,9 @@ $ pipenv run python --version
 $ pipenv run pytest
 
 # Use Env
-$ CLIENT_ID=$CLIENT_ID CLIENT_SECRET=$CLIENT_SECRET pipenv run pytest tests/test_fitbit.py
+$ export SLACK_BOT_TOKEN=xoxb-xxxx
+$ export SLACK_CHANNEL=xxx #ex: #random
+$ SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN SLACK_CHANNEL=app$SLACK_CHANNEL pipenv run pytest tests/test_check_distance.py
 ```
 
 ## Debug

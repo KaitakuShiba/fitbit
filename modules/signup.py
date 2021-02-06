@@ -7,13 +7,13 @@ import app
 class Signup:
     @classmethod
     def call(cls):
-        email = request.form.get('email')
+        name = request.form.get('name')
         client_id = request.form.get('client_id')
         client_secret = request.form.get('client_secret')
         hashed_password = bcrypt.hashpw(request.form.get('password').encode(), bcrypt.gensalt())
-        app.db.session.add(app.User(email=email, hashed_password=hashed_password, client_id=client_id, client_secret=client_secret))
+        app.db.session.add(app.User(name=name, hashed_password=hashed_password, client_id=client_id, client_secret=client_secret))
         app.db.session.commit()
-        user = app.User.query.filter_by(email=email).first()
+        user = app.User.query.filter_by(name=name).first()
         login_user(user)
         return redirect(url_for('fitbit_registration'))
 

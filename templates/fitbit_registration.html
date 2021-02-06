@@ -131,7 +131,7 @@
   <body>
     <div class="main-block">
       <h1>Fitbit distance notifier token registration</h1>
-      <h4>Hello, {{ user.email }}!, Please follow the steps to get an access token for fitbit.</h4>
+      <h4>Hello, {{ user.name }}!, Please follow the steps to get an access token for fitbit.</h4>
         <form action="/fitbit/users" method="get">
           <input name="user_id" value={{user.id}} type="hidden">
           <label id="icon" for="name"><i class="fas fa-running"></i></label>
