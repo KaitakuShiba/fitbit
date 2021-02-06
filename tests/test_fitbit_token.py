@@ -14,7 +14,7 @@ def test_fitbit_token(mocker):
     # mocker.patch('modules.gather_keys_oauth2.OAuth2Server.browser_authorize').return_value = res_mock
     # TODO:with mocker.patch('modules.gather_keys_oauth2.OAuth2Server.browser_authorize.fitbit.client.session.token', new_callable=mocker.PropertyMock) as mock_foo:
     # TODO:上記は後でモックできたら直す
-    result = client.get('/fitbit/users', query_string={'user_id': user.id})
+    result = client.get('/fitbit/users', query_string={'user_id': user.id, 'target_distance': 3})
     assert b'Registered! Close browser.' == result.data
 
 pytest.fixture(autouse=True)

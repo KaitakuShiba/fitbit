@@ -64,10 +64,11 @@ class User(db.Model, UserMixin):
     access_token = db.Column(db.Text, nullable=True)
     refresh_token = db.Column(db.String, nullable=True)
 
-    def __init__(self, email, hashed_password, client_id, client_secret, access_token=None, refresh_token=None):
+    def __init__(self, email, hashed_password, client_id, client_secret, target_distance, access_token=None, refresh_token=None):
         self.email = email
         self.hashed_password = hashed_password
         self.client_id = client_id
         self.client_secret = client_secret
+        self.target_distance = target_distance
         self.access_token = access_token
         self.refresh_token = refresh_token
