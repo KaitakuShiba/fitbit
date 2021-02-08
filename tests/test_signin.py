@@ -9,8 +9,8 @@ def test_signup():
     app.config['TESTING'] = True
     client = app.test_client()
     data = {'name': name, 'password': 'password' }
-    result = client.post('/signin', data=data, follow_redirects=True)
-    assert b'hello' == result.data
+    result = client.post('/signin', data=data, follow_redirects=False)
+    assert result.status_code == 302
 
 @pytest.fixture(autouse=True)
 def setup():

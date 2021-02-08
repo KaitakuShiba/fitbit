@@ -44,6 +44,10 @@ def user_loader(id):
 def render_signin_html():
     return render_template('signin.html')
 
+@app.route("/signin", methods=["GET"])
+def render_signin_html_with_message():
+    return render_template('signin.html', message='サインインできませんでした')
+
 @app.route("/signin", methods=["POST"])
 def signin():
     return Signin().call()
@@ -80,7 +84,7 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(), onupdate=datetime.now())
 
-    def __init__(self, name, hashed_password, client_id, client_secret, target_distance, access_token=None, refresh_token=None):
+    def __init__(self, name, hashed_password, client_id, client_secret, target_distance=None, access_token=None, refresh_token=None):
         self.name = name
         self.hashed_password = hashed_password
         self.client_id = client_id

@@ -7,7 +7,6 @@ import app
 class Signin:
     @classmethod
     def call(cls):
-        # TODO: ユニークにする
         name = request.form.get('name')
         user = app.User.query.filter_by(name=name).first()
         if user is None:
