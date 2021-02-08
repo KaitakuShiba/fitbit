@@ -111,6 +111,9 @@
       .link {
       text-align: center;
       }
+      .error-message {
+      text-align: center;
+      }
       button {
       width: 100%;
       padding: 10px 0;
@@ -132,8 +135,8 @@
       <h1>Fitbit distance notifier sigunup</h1>
       <form action="/signup", method="post">
         <hr>
-        <label id="icon" for="name"><i class="fas fa-envelope-square"></i></label>
-        <input type="text" name="email" id="email" placeholder="Email" required/>
+        <label id="icon" for="name"><i class="fas fa-user"></i></label>
+        <input type="text" name="name" id="name" placeholder="Name(appear in slack)" required/>
         <label id="icon" for="name"><i class="fas fa-key"></i></label>
         <input type="password" name="password" id="password" placeholder="Password" required/>
         <label id="icon" for="name"><i class="fas fa-user"></i></label>
@@ -141,10 +144,13 @@
         <label id="icon" for="name"><i class="fas fa-unlock-alt"></i></label>
         <input type="password" name="client_secret" id="name" placeholder="Client Secret" required/>
         <hr>
+        {% if message %}
+            <div class="error-message">{{message}}</div>
+        {% endif %}
         <div class="btn-block">
           <button type="submit" href="/">Submit</button>
         </div>
-        <div class="link"><a href="/">ログインはこちら</a></div>
+        <div class="link"><a href="/">サインインはこちら</a></div>
       </form>
     </div>
   </body>

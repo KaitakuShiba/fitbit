@@ -1,11 +1,9 @@
 Flask>=1.1.2
 flask-login>=0.5
-pytest
 fitbit
 cherrypy
 bcrypt
 Flask-SQLAlchemy
-pytest-mock
 slack_sdk
 aiohttp
 flask_apscheduler

@@ -1,15 +1,15 @@
-import pytest, sqlite3, os, pdb, bcrypt
+import pytest, os, pdb, bcrypt
 from app import app, db, User, fitbit
 from flask_login import login_user
 import modules.gather_keys_oauth2
 
 DB_NAME = 'fitbit.db'
-email = 'sample@emxample.com'
+name = 'foo'
 
 def test_fitbit_token(mocker):
     app.config['TESTING'] = True
     client = app.test_client()
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(name=name).first()
     # res_mock = mocker.Mock()
     # mocker.patch('modules.gather_keys_oauth2.OAuth2Server.browser_authorize').return_value = res_mock
     # TODO:with mocker.patch('modules.gather_keys_oauth2.OAuth2Server.browser_authorize.fitbit.client.session.token', new_callable=mocker.PropertyMock) as mock_foo:
@@ -22,8 +22,9 @@ def setup():
     app.config['LOGIN_DISABLED'] = True
     __create_db()
     hashed_password = bcrypt.hashpw('password'.encode(), bcrypt.gensalt())
-    # ToDo：確認したいときは実値に置き換える
-    db.session.add(User(email=email, hashed_password=hashed_password, client_id='client_id', client_secret='client_secret'))
+    # 実際に確認したいときは、client_idとclient_secretを実値に置き換える
+    db.session.add(User(name=name, hashed_password=hashed_password, client_id='client_id', client_secret='client_secret'))
+    db.session.commit()
 
 def teardown():
     app.config['LOGIN_DISABLED'] = False

@@ -7,8 +7,8 @@ import app
 class Signin:
     @classmethod
     def call(cls):
-        email = request.form.get('email')
-        user = app.User.query.filter_by(email=email).first()
+        name = request.form.get('name')
+        user = app.User.query.filter_by(name=name).first()
         if user is None:
             return redirect(url_for('signin'))
         if not bcrypt.checkpw(request.form.get('password').encode(), user.hashed_password):

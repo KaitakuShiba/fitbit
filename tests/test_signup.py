@@ -7,10 +7,10 @@ DB_NAME = 'fitbit.db'
 def test_signup():
     app.config['TESTING'] = True
     client = app.test_client()
-    email = 'sample@emxample.com'
-    data = {'email': email, 'password': 'password', 'client_id':'client_id', 'client_secret': 'client_secret' }
+    name = 'foo'
+    data = {'name': name, 'password': 'password', 'client_id':'client_id', 'client_secret': 'client_secret' }
     result = client.post('/signup', data=data)
-    assert User.query.first().email == email
+    assert User.query.first().name == name
 
 @pytest.fixture(autouse=True)
 def setup():

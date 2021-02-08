@@ -21,6 +21,9 @@ bcrypt = "*"
 Flask-SQLAlchemy = "*"
 factory-boy = ">=3.2.0"
 pytest-mock = "*"
+Flask-APScheduler = "*"
+slack-sdk = "*"
+aiohttp = "*"
 
 [dev-packages]
 
