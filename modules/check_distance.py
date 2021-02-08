@@ -5,7 +5,13 @@ from datetime import datetime, date
 
 class CheckDistanceJob:
     @classmethod
-    def call(cls):
+    def call(cls):    
+        print('starting job..')
+
+        if not os.environ.get('SLACK_CHANNEL')  or not os.environ.get('SLACK_BOT_TOKEN') :
+            print('not setting env')
+            return
+
         for user in app.User.query.all():
             if not user.client_id or not user.client_secret or not user.access_token or not user.refresh_token or not user.target_distance:
                 continue
@@ -13,8 +19,9 @@ class CheckDistanceJob:
                 continue
             
             auth2_client = fitbit.Fitbit(user.client_id, user.client_secret, oauth2=True, access_token=user.access_token, refresh_token=user.refresh_token)
+            today = str((datetime.now()).strftime("%Y-%m-%d"))
             try:
-                today = str((datetime.now()).strftime("%Y-%m-%d"))
+                
                 fit_stats_distance = auth2_client.intraday_time_series('activities/distance', base_date=today, detail_level='1min')
             except fitbit.exceptions.HTTPUnauthorized:
                 print(f'user_id: {user.id} has invalid token.')
@@ -25,7 +32,8 @@ class CheckDistanceJob:
                 cls._send_message_to_slack(user)
                 user.updated_at = datetime.now()
                 app.db.session.commit()
-
+       
+        print('updated!')
         return 'updated!'
 
     def _convert_km(str_miles):

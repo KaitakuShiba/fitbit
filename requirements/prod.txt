@@ -1,0 +1,9 @@
+Flask>=1.1.2
+flask-login>=0.5
+fitbit
+cherrypy
+bcrypt
+Flask-SQLAlchemy
+slack_sdk
+aiohttp
+flask_apscheduler

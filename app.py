@@ -27,9 +27,9 @@ scheduler = APScheduler()
 scheduler.init_app(app)
 scheduler.start()
 
-# @scheduler.task('interval', id='check_distance_job', seconds=3, misfire_grace_time=900)
-# def check_distance_job():
-#     return CheckDistanceJob().call()
+@scheduler.task('interval', id='check_distance_job', seconds=10_800, misfire_grace_time=900)
+def check_distance_job():
+    return CheckDistanceJob().call()
 
 # https://github.com/maxcountryman/flask-login#usage
 @login_manager.user_loader
