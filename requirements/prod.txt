@@ -7,3 +7,4 @@ Flask-SQLAlchemy
 slack_sdk
 aiohttp
 flask_apscheduler
+gunicorn>=20.0.4
