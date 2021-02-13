@@ -6,6 +6,7 @@ import sys
 import threading
 import traceback
 import webbrowser
+import pdb
 
 from urllib.parse import urlparse
 from base64 import b64encode
@@ -14,7 +15,7 @@ from oauthlib.oauth2.rfc6749.errors import MismatchingStateError, MissingTokenEr
 
 class OAuth2Server:
     def __init__(self, client_id, client_secret,
-                 redirect_uri='http://127.0.0.1:8080/'):
+                 redirect_uri=os.getenv('REDIRECT_URI')):
         """ Initialize the FitbitOauth2Client """
         self.success_html = """
             <h1>You are now authorized to access the Fitbit API!</h1>

@@ -11,18 +11,22 @@ $ pipenv --python 3.8
 # install package
 $ pipenv install -r ./requirements/dev.txt
 
-# run with gunicorn(not requres flusk run)
-$ RELOAD=True DEBUG=True LOG='-' LOG_LEVEL='info' SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN SLACK_CHANNEL=$SLACK_CHANNEL FLASK_ENV=development pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py
-
-$ curl http://localhost:5000
-> something response
-# version
+# check python version
 $ pipenv run python --version
+> Python 3.8.7
+
+# run flask
+$ sudo FLASK_ENV=development pipenv run flask run --port=80 
+
+# run with gunicorn and nginx(not requres flusk run)
+$ nginx -c ${PWD}/config/nginx.conf
+$ pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py
+$ curl http://localhost
+> something response through Nginx
+
 # prod
-$ export SLACK_BOT_TOKEN=xoxb-xxxx
-$ export SLACK_CHANNEL=xxx #ex: #random
 $ pipenv install -r ./requirements/prod.txt
-$ RELOAD=False DEBUG=None LOG=None LOG_LEVEL='warning' SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN SLACK_CHANNEL=$SLACK_CHANNEL FLASK_ENV=prodcution pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py -D
+$ RELOAD=False DEBUG=None LOG=None LOG_LEVEL='warning' pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py -D
 ```
 
 ## Testing
@@ -30,10 +34,8 @@ $ RELOAD=False DEBUG=None LOG=None LOG_LEVEL='warning' SLACK_BOT_TOKEN=$SLACK_BO
 # testing
 $ pipenv run pytest
 
-# Use Env
-$ export SLACK_BOT_TOKEN=xoxb-xxxx
-$ export SLACK_CHANNEL=xxx #ex: #random
-$ SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN SLACK_CHANNEL=app $SLACK_CHANNEL pipenv run pytest tests/test_check_distance.py
+# if use Env
+$ SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN SLACK_CHANNEL=$SLACK_CHANNEL pipenv run pytest tests/test_check_distance.py
 ```
 
 ## Debug
@@ -60,7 +62,7 @@ $ nginx -c ${PWD}/config/nginx.conf
 $ nginx -s stop
 
 # run gunicorn
-$ SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN SLACK_CHANNEL=$SLACK_CHANNEL FLASK_ENV=prodcution pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py --no-debugger 
+$ pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py --no-debugger 
 # kill gunicorn
 $ pkill gunicorn
 ```
