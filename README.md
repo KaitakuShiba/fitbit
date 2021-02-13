@@ -15,6 +15,19 @@ $ pipenv install -r ./requirements/dev.txt
 $ pipenv run python --version
 > Python 3.8.7
 
+# set .env
+SLACK_BOT_TOKEN = 'xxxx'
+SLACK_CHANNEL = '#random'
+FLASK_ENV = 'development'
+REDIRECT_URI = 'http://127.0.0.1:8000/'
+CLIENT_ID = 'xxxx'
+CLIENT_SECRET = 'xxxx'
+RELOAD = True
+DEBUG = True
+LOG = '-'
+LOG_LEVEL = 'debug'
+SECRET_KEY = 'xxxx'
+
 # run flask
 $ sudo FLASK_ENV=development pipenv run flask run --port=80 
 
@@ -26,7 +39,7 @@ $ curl http://localhost
 
 # prod
 $ pipenv install -r ./requirements/prod.txt
-$ RELOAD=False DEBUG=None LOG=None LOG_LEVEL='warning' pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py -D
+$ pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py -D
 ```
 
 ## Testing

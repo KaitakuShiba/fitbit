@@ -7,14 +7,14 @@ from modules.signin import Signin
 from modules.check_distance import CheckDistanceJob
 from flask_apscheduler import APScheduler
 from datetime import datetime
-import pdb
+import os
 
 app = Flask(__name__)
 
 app.config.update(
     SQLALCHEMY_DATABASE_URI = "sqlite:///fitbit.db",
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
-    SECRET_KEY = 'sample', #環境変数にする
+    SECRET_KEY = os.getenv('SECRET_KEY'),
     SCHEDULER_API_ENABLED = True
 )
 
