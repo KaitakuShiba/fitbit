@@ -16,6 +16,7 @@ Flask-Login = ">=0.5"
 CherryPy = "*"
 Flask-SQLAlchemy = "*"
 Flask-APScheduler = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
