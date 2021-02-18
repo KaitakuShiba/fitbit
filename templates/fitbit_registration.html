@@ -132,12 +132,15 @@
     <div class="main-block">
       <h1>Fitbit distance notifier token registration</h1>
       <h4>Hello, {{ user.name }}!, Please follow the steps to get an access token for fitbit.</h4>
-        <form action="/fitbit/users" method="get">
-          <input name="user_id" value={{user.id}} type="hidden">
-          <label id="icon" for="name"><i class="fas fa-running"></i></label>
-          <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="1" step="0.5" required/>
-          <button type="submit" href="/fitbit/users">Get OAuth Token</button>
-        </form>
+      <a type="submit" href={{url}} target=”_blank”>Get OAuth Token</a>
+
+      <form action="/fitbit/users" method="get">
+        <label id="icon" for="name"><i class="fas fa-running"></i></label>
+        <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="1" step="0.5" required/>
+        <label id="icon" for="name"><i class="fas fa-code fa-xs"></i></label>
+        <input type="text" name="code" id="name" placeholder="Code" required/>
+        <button type="submit" href="/fitbit/users">Get OAuth Token</button>
+      </form>
     </div>
   </body>
 </html>

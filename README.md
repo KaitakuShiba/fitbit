@@ -67,18 +67,8 @@ test()
 $ pipenv run python migrate.py
 ```
 
-## AP
-```bash
-# run Nginx
-$ nginx -c ${PWD}/config/nginx.conf
-# storp Nginx
-$ nginx -s stop
-
-# run gunicorn
-$ pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py --no-debugger 
-# kill gunicorn
-$ pkill gunicorn
-```
+## Note
+Due to specifications, the distance will be calculated tomorrow after registration.
 
 ## Ref
 - https://towardsdatascience.com/collect-your-own-fitbit-data-with-python-ff145fa10873

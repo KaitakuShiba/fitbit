@@ -11,12 +11,12 @@ pytest-mock = "*"
 slack-sdk = "*"
 aiohttp = "*"
 gunicorn = ">=20.0.4"
+python-dotenv = "*"
 Flask = ">=1.1.2"
 Flask-Login = ">=0.5"
 CherryPy = "*"
 Flask-SQLAlchemy = "*"
 Flask-APScheduler = "*"
-python-dotenv = "*"
 
 [dev-packages]
 

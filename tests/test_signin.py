@@ -1,6 +1,7 @@
 import pytest, sqlite3, os, pdb, bcrypt
 from app import app, db, User
 from flask import request, url_for
+from flask_login import current_user
 
 DB_NAME = 'fitbit.db'
 name = 'foo'

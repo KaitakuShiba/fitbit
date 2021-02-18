@@ -7,6 +7,8 @@ from modules.signin import Signin
 from modules.check_distance import CheckDistanceJob
 from flask_apscheduler import APScheduler
 from datetime import datetime
+from fitbit.api import Fitbit
+from flask_login import current_user
 import os
 
 app = Flask(__name__)
@@ -44,6 +46,10 @@ def user_loader(id):
 def render_signin_html():
     return render_template('signin.html')
 
+@app.route("/redirect", methods=["GET"])
+def render_code_html():
+    return render_template('code.html')
+
 @app.route("/signin", methods=["GET"])
 def render_signin_html_with_message():
     return render_template('signin.html', message='サインインできませんでした')
@@ -63,7 +69,15 @@ def signup():
 @app.route("/fitbit_registration", methods=["GET"])
 @login_required
 def fitbit_registration():
-    return render_template('fitbit_registration.html', user=current_user)
+    f = Fitbit(
+            current_user.client_id,
+            current_user.client_secret,
+            redirect_uri=os.getenv('REDIRECT_URI'),
+            scope=['activity'],
+            timeout=10,
+        )
+    url, _ = f.client.authorize_token_url()
+    return render_template('fitbit_registration.html', user=current_user, url=url)
 
 @app.route("/fitbit/users", methods=["GET"])
 @login_required

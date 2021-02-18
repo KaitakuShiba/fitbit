@@ -8,7 +8,7 @@ class CheckDistanceJob:
     def call(cls):    
         print('starting job..')
 
-        if not os.environ.get('SLACK_CHANNEL')  or not os.environ.get('SLACK_BOT_TOKEN') :
+        if not os.environ.get('SLACK_CHANNEL') or not os.environ.get('SLACK_BOT_TOKEN'):
             print('not setting env')
             return
 
@@ -21,7 +21,6 @@ class CheckDistanceJob:
             auth2_client = fitbit.Fitbit(user.client_id, user.client_secret, oauth2=True, access_token=user.access_token, refresh_token=user.refresh_token)
             today = str((datetime.now()).strftime("%Y-%m-%d"))
             try:
-                
                 fit_stats_distance = auth2_client.intraday_time_series('activities/distance', base_date=today, detail_level='1min')
             except fitbit.exceptions.HTTPUnauthorized:
                 print(f'user_id: {user.id} has invalid token.')
