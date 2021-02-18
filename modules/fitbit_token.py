@@ -28,7 +28,7 @@ class FitbitToken:
         current_user.target_distance = target_distance
         app.db.session.commit()
         login_user(current_user)
-        return 'Registered! Close browser.'
+        return 'Registered! Close tab.'
 
 if __name__ == "__main__":
     call()

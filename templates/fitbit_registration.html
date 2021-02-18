@@ -123,6 +123,19 @@
       font-weight: 600;
       color: #fff;
       }
+      #code-button {
+      width: 100%;
+      padding: 10px 0;
+      border-radius: 5px; 
+      border: none;
+      background: #1c87c9; 
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+      }
       button:hover {
       background: #26a9e0;
       }
@@ -132,9 +145,9 @@
     <div class="main-block">
       <h1>Fitbit distance notifier token registration</h1>
       <h4>Hello, {{ user.name }}!, Please follow the steps to get an access token for fitbit.</h4>
-      <a type="submit" href={{url}} target=”_blank”>Get OAuth Token</a>
 
       <form action="/fitbit/users" method="get">
+        <div><a id="code-button" type="submit" href={{url}} target=”_blank”>Get Code</a></div>
         <label id="icon" for="name"><i class="fas fa-running"></i></label>
         <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="1" step="0.5" required/>
         <label id="icon" for="name"><i class="fas fa-code fa-xs"></i></label>
