@@ -1,2 +1,3 @@
 fitbit.db
 .env
+var/log/*.log
