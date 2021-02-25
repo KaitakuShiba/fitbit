@@ -1,7 +1,7 @@
 import app, pdb, fitbit, os, base64, json, requests
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
-from datetime import datetime, date
+from datetime import datetime, date, timedelta, timezone
 
 class CheckDistanceJob:
     @classmethod
@@ -19,7 +19,8 @@ class CheckDistanceJob:
                 continue
             
             auth2_client = fitbit.Fitbit(user.client_id, user.client_secret, oauth2=True, access_token=user.access_token, refresh_token=user.refresh_token)
-            today = str((datetime.now()).strftime("%Y-%m-%d"))
+            JST = timezone(timedelta(hours=+9), 'JST')
+            today = str((datetime.now(JST)).strftime("%Y-%m-%d"))
             try:
                 fit_stats_distance = auth2_client.intraday_time_series('activities/distance', base_date=today, detail_level='1min')
             except fitbit.exceptions.HTTPUnauthorized:
