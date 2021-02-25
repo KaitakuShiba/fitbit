@@ -40,6 +40,8 @@ $ curl http://localhost
 # prod
 $ pipenv install -r ./requirements/prod.txt
 $ pipenv run gunicorn app:app -c ${PWD}/config/gunicorn_settings.py -D
+# Stop gunicorn
+$ pkill gunicorn
 ```
 
 ## Testing
