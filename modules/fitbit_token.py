@@ -7,7 +7,7 @@ from oauthlib.oauth2.rfc6749.errors import MismatchingStateError, MissingTokenEr
 class FitbitToken:
     @classmethod
     def call(cls):
-        target_distance = int(request.args.get('target_distance'))
+        target_distance = float(request.args.get('target_distance'))
         code = request.args.get('code')
 
         if not current_user.client_id or not current_user.client_secret or not target_distance or not code or not os.getenv('REDIRECT_URI'):
