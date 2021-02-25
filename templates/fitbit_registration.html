@@ -149,7 +149,7 @@
       <form action="/fitbit/users" method="get">
         <div><a id="code-button" type="submit" href={{url}} target=”_blank” rel="noopener noreferrer">Get Token</a></div>
         <label id="icon" for="name"><i class="fas fa-running"></i></label>
-        <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="1" step="0.5" required/>
+        <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="0.5" max="100" step="0.5" required/>
         <label id="icon" for="name"><i class="fas fa-code fa-xs"></i></label>
         <input type="text" name="access_token" id="name" placeholder="access_token" required/>
         <button type="submit" href="/fitbit/users">Submit</button>
