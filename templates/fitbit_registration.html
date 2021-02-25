@@ -147,7 +147,7 @@
       <h4>Hello, {{ user.name }}!, Please follow the steps to get an access token for fitbit.</h4>
 
       <form action="/fitbit/users" method="get">
-        <div><a id="code-button" type="submit" href={{url}} target=”_blank”>Get Code</a></div>
+        <div><a id="code-button" type="submit" href={{url}} target=”_blank” rel="noopener noreferrer">Get Code</a></div>
         <label id="icon" for="name"><i class="fas fa-running"></i></label>
         <input type="number" name="target_distance" id="name" placeholder="Target distance(km)" min="1" step="0.5" required/>
         <label id="icon" for="name"><i class="fas fa-code fa-xs"></i></label>
