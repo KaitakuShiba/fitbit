@@ -9,7 +9,7 @@ from flask_apscheduler import APScheduler
 from datetime import datetime
 from fitbit.api import Fitbit
 from flask_login import current_user
-import os
+import os, re
 
 app = Flask(__name__)
 
@@ -72,12 +72,16 @@ def fitbit_registration():
     f = Fitbit(
             current_user.client_id,
             current_user.client_secret,
-            redirect_uri=os.getenv('REDIRECT_URI'),
-            scope=['activity'],
-            timeout=10,
+            redirect_uri=os.getenv('REDIRECT_URI')
         )
-    url, _ = f.client.authorize_token_url()
-    return render_template('fitbit_registration.html', user=current_user, url=url)
+    # https://community.fitbit.com/t5/Web-API-Development/Refresh-token-endpoint-Access-Token-always-expires-in-28800/td-p/4235669
+    # クライアントのパラメータとAPIのパラメータがあっていないのでAPIに合うように置換
+    # code置換では8時間までしか有効期限がないため、Implicit Grant Flowを使用
+    YEAR_SECOND = 31_536_000
+    url, _ = f.client.authorize_token_url(scope=['activity'], expires_at=YEAR_SECOND)
+    replaced_url = re.sub('(?<=response_type=)code', 'token', url)
+    replaced_url = re.sub('expires_at', 'expires_in', replaced_url)
+    return render_template('fitbit_registration.html', user=current_user, url=replaced_url)
 
 @app.route("/fitbit/users", methods=["GET"])
 @login_required

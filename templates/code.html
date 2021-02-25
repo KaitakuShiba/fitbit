@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="main-block">
-      <h1>Integrated! Input below code and close tab.</h1>
+      <h1>Integrated! Input form below token and close tab.</h1>
       <div id="code"></div>
     </div>
   </body>
@@ -13,6 +13,6 @@
 
 <script type="text/javascript">
   const elem = document.getElementById('code')
-  const url = window.location.href.match(/code=([^&]*)/)
+  const url = window.location.href.match(/access_token=([^&]*)/)
   elem.innerHTML = `<p>${url[1]}</p>`
 </script>

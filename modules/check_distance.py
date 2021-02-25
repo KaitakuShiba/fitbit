@@ -18,7 +18,7 @@ class CheckDistanceJob:
             if cls._has_already_called_today(user.updated_at):
                 continue
             
-            auth2_client = fitbit.Fitbit(user.client_id, user.client_secret, oauth2=True, access_token=cls._get_access_token(user), refresh_token=user.refresh_token)
+            auth2_client = fitbit.Fitbit(user.client_id, user.client_secret, oauth2=True, access_token=user.access_token, refresh_token=user.refresh_token)
             today = str((datetime.now()).strftime("%Y-%m-%d"))
             try:
                 fit_stats_distance = auth2_client.intraday_time_series('activities/distance', base_date=today, detail_level='1min')
@@ -54,16 +54,20 @@ class CheckDistanceJob:
         except SlackApiError as e:
             print(f"Got an error: {e.response['error']}")
         
-    def _get_access_token(user):
-        # https://dev.fitbit.com/build/reference/web-api/oauth2/#refreshing-tokens
-        auth = f'{user.client_id}:{user.client_secret}'
-        auth_base64 = base64.b64encode(auth.encode())
-        data = {'grant_type': 'refresh_token', 'refresh_token': user.refresh_token}
-        url = 'https://api.fitbit.com/oauth2/token'
-        header = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': f'Basic {auth_base64.decode()}'}        
-        res = requests.post(url , headers=header, data=data)
-        return json.loads(res.text)['access_token']
-        
+    # def _get_access_token(user):
+    #     # https://dev.fitbit.com/build/reference/web-api/oauth2/#refreshing-tokens
+    #     auth = f'{user.client_id}:{user.client_secret}'
+    #     auth_base64 = base64.b64encode(auth.encode())
+    #     data = {'grant_type': 'refresh_token', 'refresh_token': user.refresh_token}
+    #     url = 'https://api.fitbit.com/oauth2/token'
+    #     header = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': f'Basic {auth_base64.decode()}'}        
+    #     res = requests.post(url , headers=header, data=data)
+    #     res_dict = json.loads(res.text)
+    #     if 'access_token' in res_dict:
+    #         return res_dict['access_token']
+    #     else:
+    #         print(f'user_id: {user.id}: {res_dict}')
+    #         return None
 
 if __name__ == "__main__":
     call()
